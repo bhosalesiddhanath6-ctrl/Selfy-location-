@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+  <meta charset="UTF-8">
+  <title>Selfie & Location</title>
+</head>
+<body>
+  <h2>📸 Selfie आणि 📍 Location</h2>
+
+  <button onclick="getLocation()">Location Allow करा</button>
+  <br><br>
+
+  <input type="file" accept="image/*" capture="camera" id="selfie">
+  <br><br>
+
+  <button onclick="sendWhatsApp()">WhatsApp वर पाठवा</button>
+
+  <script>
+    let latitude = "";
+    let longitude = "";
+
+    function getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          latitude = position.coords.latitude;
+          longitude = position.coords.longitude;
+          alert("Location मिळाली ✔️");
+        });
+      } else {
+        alert("Location support नाही");
+      }
+    }
+
+    function sendWhatsApp() {
+      if (latitude === "" || longitude === "") {
+        alert("आधी Location Allow करा");
+        return;
+      }
+
+      let phone = "91XXXXXXXXXX"; // इथे तुमचा नंबर टाका
+      let mapsLink = "https://maps.google.com/?q=" + latitude + "," + longitude;
+
+      let message =
+        "📸 Selfie Taken\n" +
+        "📍 Location:\n" +
+        mapsLink;
+
+      let url = "https://wa.me/" + phone + "?text=" + encodeURIComponent(message);
+      window.open(url, "_blank");
+    }
+  </script>
+</body>
+    </html>
